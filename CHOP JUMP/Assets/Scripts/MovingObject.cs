@@ -37,7 +37,6 @@ public abstract class MovingObject : MonoBehaviour {
 	protected virtual void AttemptMove <T> (int xDir, int yDir) where T : Component {
 		RaycastHit2D hit;
 		bool canMove = Move (xDir, yDir, out hit);
-		print (canMove);
 	
 		if (hit.transform == null) {
 			return;
@@ -51,7 +50,6 @@ public abstract class MovingObject : MonoBehaviour {
 
 	protected IEnumerator SmoothMovement (Vector3 end) {
 		float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
-
 		while (sqrRemainingDistance > float.Epsilon) {
 			Vector3 newPosition = Vector3.MoveTowards (rb2D.position, end, inverseMoveTime * Time.deltaTime);
 			rb2D.MovePosition (newPosition);

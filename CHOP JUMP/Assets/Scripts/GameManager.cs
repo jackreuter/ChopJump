@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
 	private int level = 3;
 
 	void Awake () {
-		if (instance = null) {
+		if (instance == null) {
 			instance = this;
 		} else if (instance != this) {
 			Destroy (gameObject);

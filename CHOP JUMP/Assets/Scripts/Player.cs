@@ -118,7 +118,6 @@ public class Player : MovingObject {
 		}
 
 		if (ropeProgress == 5 && jumpFrame != 0 && (horizontal != 0 || vertical !=0)) {
-			print ("DAG");
 			ropeProgress = 0;
 			ropeFrame = 0;
 			jumpFrame = 0;
