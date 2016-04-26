@@ -1,0 +1,17 @@
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/Assembly-CSharp.dll
+/Users/jackreuter/CHOP JUMP/obj/Debug/Assembly-CSharp.dll
+/Users/jackreuter/CHOP JUMP/obj/Debug/Assembly-CSharp.dll.mdb
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/UnityEngine.dll
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/UnityEditor.dll
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/Mono.Cecil.dll
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/Unity.DataContract.dll
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/jackreuter/CHOP JUMP/Temp/bin/Debug/Mono.Cecil.Mdb.dll

@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{C61852D4-97A7-29EC-591D-47277056495C}") = "CHOP JUMP", "Assembly-CSharp.csproj", "{004650D1-E347-5FAD-15FC-FB305A2631E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{004650D1-E347-5FAD-15FC-FB305A2631E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{004650D1-E347-5FAD-15FC-FB305A2631E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{004650D1-E347-5FAD-15FC-FB305A2631E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{004650D1-E347-5FAD-15FC-FB305A2631E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
