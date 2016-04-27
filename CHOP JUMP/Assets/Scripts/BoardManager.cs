@@ -16,8 +16,8 @@ public class BoardManager : MonoBehaviour {
 		}
 	}
 
-	public int columns = 8;
-	public int rows = 8;
+	public int columns = 15;
+	public int rows = 15;
 	public Count wallCount = new Count(5,9);
 	public GameObject exit;
 	public GameObject[] floorTiles;

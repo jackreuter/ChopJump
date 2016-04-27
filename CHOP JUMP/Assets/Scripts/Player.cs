@@ -12,7 +12,8 @@ public class Player : MovingObject {
 	public bool jumping = false;
 
 	public int jumpFrames = 10;
-	public int ropeFrames = 10;
+	public int ropeFrames = 3;
+	public int maxMove = 1;
 
 	private Animator animator;                  //Used to store a reference to the Player's animator component.
 	
@@ -25,7 +26,7 @@ public class Player : MovingObject {
 	private void onDisable() {}
 	private void checkIfGameOver() {}
 
-	protected override void AttemptMove<T> (int xDir, int yDir)
+	protected override void AttemptMove<T> (float xDir, float yDir)
 	{
 		base.AttemptMove<T>(xDir, yDir);
 		RaycastHit2D hit;
@@ -37,8 +38,8 @@ public class Player : MovingObject {
 	void Update () {
 
 		//logistics of rope flourish motion for movement mechanic
-		int horizontal = (int)(Input.GetAxisRaw ("Horizontal"));
-		int vertical = (int)(Input.GetAxisRaw ("Vertical"));
+		float horizontal = (float) ((Input.GetAxisRaw ("Horizontal")));
+		float vertical = (float) (Input.GetAxisRaw ("Vertical"));
 
 		if (jumping) {
 			if (jumpFrame == jumpFrames) {
@@ -118,6 +119,17 @@ public class Player : MovingObject {
 		}
 
 		if (ropeProgress == 5 && jumpFrame != 0 && (horizontal != 0 || vertical !=0)) {
+
+			if (horizontal > 0 && vertical > 1) {
+				float dist = Mathf.Sqrt(maxMove*maxMove*2);
+				horizontal = dist;
+				vertical = dist;
+			}
+
+			float jumpPercent = (float)jumpFrame / (float)jumpFrames;
+			horizontal = horizontal * jumpPercent * maxMove;
+			vertical = vertical * jumpPercent * maxMove;
+
 			ropeProgress = 0;
 			ropeFrame = 0;
 			jumpFrame = 0;
@@ -128,8 +140,8 @@ public class Player : MovingObject {
 	}
 
 	protected override void OnCantMove<T> (T component) {
-		Wall hitWall = component as Wall;
-  		hitWall.DamageWall (wallDamage);
+//		Wall hitWall = component as Wall;
+//  		hitWall.DamageWall (wallDamage);
 		animator.SetTrigger ("playerChop");
 	}
 
