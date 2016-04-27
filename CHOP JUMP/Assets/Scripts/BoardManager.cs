@@ -38,6 +38,43 @@ public class BoardManager : MonoBehaviour {
 		}
 	}
 
+	//RandomPosition returns a random position from our list gridPositions.
+	Vector3 RandomPosition ()
+	{
+		//Declare an integer randomIndex, set it's value to a random number between 0 and the count of items in our List gridPositions.
+		int randomIndex = Random.Range (0, gridPositions.Count);
+
+		//Declare a variable of type Vector3 called randomPosition, set it's value to the entry at randomIndex from our List gridPositions.
+		Vector3 randomPosition = gridPositions[randomIndex];
+
+		//Remove the entry at randomIndex from the list so that it can't be re-used.
+		gridPositions.RemoveAt (randomIndex);
+
+		//Return the randomly selected Vector3 position.
+		return randomPosition;
+	}
+
+
+	//LayoutObjectAtRandom accepts an array of game objects to choose from along with a minimum and maximum range for the number of objects to create.
+	void LayoutObjectAtRandom (GameObject[] tileArray, int minimum, int maximum)
+	{
+		//Choose a random number of objects to instantiate within the minimum and maximum limits
+		int objectCount = Random.Range (minimum, maximum+1);
+
+		//Instantiate objects until the randomly chosen limit objectCount is reached
+		for(int i = 0; i < objectCount; i++)
+		{
+			//Choose a position for randomPosition by getting a random position from our list of available Vector3s stored in gridPosition
+			Vector3 randomPosition = RandomPosition();
+
+			//Choose a random tile from tileArray and assign it to tileChoice
+			GameObject tileChoice = tileArray[Random.Range (0, tileArray.Length)];
+
+			//Instantiate tileChoice at the position returned by RandomPosition with no change in rotation
+			Instantiate(tileChoice, randomPosition, Quaternion.identity);
+		}
+	}
+
 	void BoardSetup() {
 		boardHolder = new GameObject ("Board").transform;
 
@@ -59,6 +96,11 @@ public class BoardManager : MonoBehaviour {
 	public void setupScene(int level) {
 		BoardSetup();
 		InitializeList ();
+
+		//Instantiate a random number of enemies based on minimum and maximum, at randomized positions.
+		int enemyCount = 3;
+		LayoutObjectAtRandom (enemyTiles, enemyCount, enemyCount);
+
 		Instantiate (exit, new Vector3 (columns - 1, rows - 1, 0f), Quaternion.identity);
 	}
 

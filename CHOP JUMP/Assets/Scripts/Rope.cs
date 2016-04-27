@@ -4,21 +4,24 @@ using System.Collections;
 public class Rope {
 
 	public bool swinging;
+	public bool attacking;
 	public int progress;
 	public int framesElapsed;
 	private int lagFrames;
 
 	public Rope() {
 		swinging = false;
+		attacking = false;
 		progress = 0;
 		framesElapsed = 0;
-		lagFrames = 10;
+		lagFrames = 15;
 	}
 
 	public void reset() {
 		swinging = false;
 		progress = 0;
 		framesElapsed = 0;
+		attacking = false;
 	}
 
 	void updateOnInput(int currentStage) {
@@ -60,6 +63,12 @@ public class Rope {
 
 		if (Input.GetKeyDown (KeyCode.Period)) {
 			this.updateOnInput(4);
+		}
+
+		if (Input.GetKeyDown (KeyCode.O)) {
+			if (progress == 3 && framesElapsed < lagFrames) {
+				attacking = true;
+			}
 		}
 
 	}

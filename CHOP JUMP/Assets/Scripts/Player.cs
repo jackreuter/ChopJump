@@ -9,8 +9,8 @@ public class Player : MovingObject {
 
 	public int jumpFrame = 0;
 	public bool jumping = false;
-	public int jumpFrames = 10;
-	public int maxMove = 1;
+	public int jumpFrames = 20;
+	public int maxMove = 2;
 
 	private Animator animator;                  //Used to store a reference to the Player's animator component.
 	
@@ -38,6 +38,7 @@ public class Player : MovingObject {
 		float horizontal = (float) ((Input.GetAxisRaw ("Horizontal")));
 		float vertical = (float) (Input.GetAxisRaw ("Vertical"));
 
+		print (jumpFrame);
 		rope.update ();
 
 		if (jumping) {
@@ -59,19 +60,24 @@ public class Player : MovingObject {
 
 		if (rope.progress == 5 && jumpFrame != 0 && (horizontal != 0 || vertical !=0)) {
 
-			if (horizontal > 0 && vertical > 1) {
-				float dist = Mathf.Sqrt(maxMove*maxMove*2);
-				horizontal = dist;
-				vertical = dist;
-			}
-
 			float jumpPercent = (float)jumpFrame / (float)jumpFrames;
-			horizontal = horizontal * jumpPercent * maxMove;
-			vertical = vertical * jumpPercent * maxMove;
+
+			if (horizontal > 0 && vertical > 0) {
+				float dist = Mathf.Sqrt (maxMove * maxMove * 2);
+				horizontal = dist * jumpPercent;
+				vertical = dist * jumpPercent;
+			} else {
+				horizontal = horizontal * jumpPercent * maxMove;
+				vertical = vertical * jumpPercent * maxMove;
+			}
 
 			jumping = false;
 			rope.reset ();
 			AttemptMove<Wall> (horizontal, vertical);
+		}
+
+		if (rope.attacking) {
+			animator.SetTrigger ("playerChop");
 		}
 	}
 
