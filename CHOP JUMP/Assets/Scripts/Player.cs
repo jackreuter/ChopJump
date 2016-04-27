@@ -5,14 +5,11 @@ public class Player : MovingObject {
 
 	public float restartLevelDelay = 1f;        //Delay time in seconds to restart level.
 	public int wallDamage = 1;                  //How much damage a player does to a wall when chopping it.
-	public int ropeProgress = 0;
-	public int ropeFrame = 0;
-	public bool swinging = false;
+	public Rope rope = new Rope();
+
 	public int jumpFrame = 0;
 	public bool jumping = false;
-
 	public int jumpFrames = 10;
-	public int ropeFrames = 3;
 	public int maxMove = 1;
 
 	private Animator animator;                  //Used to store a reference to the Player's animator component.
@@ -41,22 +38,14 @@ public class Player : MovingObject {
 		float horizontal = (float) ((Input.GetAxisRaw ("Horizontal")));
 		float vertical = (float) (Input.GetAxisRaw ("Vertical"));
 
+		rope.update ();
+
 		if (jumping) {
 			if (jumpFrame == jumpFrames) {
 				jumping = false;
 				jumpFrame = 0;
 			} else {
 				jumpFrame += 1;
-			}
-		}
-
-		if (swinging) {
-			if (ropeFrame == ropeFrames) {
-				swinging = false;
-				ropeFrame = 0;
-				ropeProgress = 0;
-			} else {
-				ropeFrame += 1;
 			}
 		}
 
@@ -68,57 +57,7 @@ public class Player : MovingObject {
 			jumping = true;
 		}
 
-		if (Input.GetKeyDown (KeyCode.RightBracket)) {
-			if (ropeProgress == 0) {
-				swinging = true;
-				ropeProgress += 1;
-			} else {
-				ropeProgress = 0;
-				swinging = false;
-			}
-		}
-			
-		if (Input.GetKeyDown (KeyCode.LeftBracket)) {
-			if (ropeProgress == 1 && ropeFrame != 0) {
-				ropeProgress += 1;
-				ropeFrame = 0;
-			} else {
-				ropeProgress = 0;
-				swinging = false;
-			}
-		}
-
-		if (Input.GetKeyDown (KeyCode.P)) {
-			if (ropeProgress == 2 && ropeFrame != 0) {
-				ropeProgress += 1;
-				ropeFrame = 0;
-			} else {
-				ropeProgress = 0;
-				swinging = false;
-			}
-		}
-
-		if (Input.GetKeyDown (KeyCode.L)) {
-			if (ropeProgress == 3 && ropeFrame != 0) {
-				ropeProgress += 1;
-				ropeFrame = 0;
-			} else {
-				ropeProgress = 0;
-				swinging = false;
-			}
-		}
-
-		if (Input.GetKeyDown (KeyCode.Period)) {
-			if (ropeProgress == 4 && ropeFrame != 0) {
-				ropeProgress += 1;
-				ropeFrame = 0;
-			} else {
-				ropeProgress = 0;
-				swinging = false;
-			}
-		}
-
-		if (ropeProgress == 5 && jumpFrame != 0 && (horizontal != 0 || vertical !=0)) {
+		if (rope.progress == 5 && jumpFrame != 0 && (horizontal != 0 || vertical !=0)) {
 
 			if (horizontal > 0 && vertical > 1) {
 				float dist = Mathf.Sqrt(maxMove*maxMove*2);
@@ -130,11 +69,8 @@ public class Player : MovingObject {
 			horizontal = horizontal * jumpPercent * maxMove;
 			vertical = vertical * jumpPercent * maxMove;
 
-			ropeProgress = 0;
-			ropeFrame = 0;
-			jumpFrame = 0;
-			swinging = false;
 			jumping = false;
+			rope.reset ();
 			AttemptMove<Wall> (horizontal, vertical);
 		}
 	}
