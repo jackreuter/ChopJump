@@ -5,18 +5,20 @@ public class Player : MovingObject {
 
 	public float restartLevelDelay = 1f;        //Delay time in seconds to restart level.
 	public int wallDamage = 1;                  //How much damage a player does to a wall when chopping it.
-	public Rope rope = new Rope();
+	public Rope rope;
 
 	public int jumpFrame = 0;
 	public bool jumping = false;
 	public int jumpFrames = 20;
-	public int maxMove = 2;
+	public float minMove = 0.5f;
+	public float maxMove = 2f;
 
 	private Animator animator;                  //Used to store a reference to the Player's animator component.
 	
 	// Use this for initialization
 	protected override void Start () {
 		animator = GetComponent<Animator> ();
+		rope = new Rope (animator);
 		base.Start ();
 	}
 
@@ -38,8 +40,8 @@ public class Player : MovingObject {
 		float horizontal = (float) ((Input.GetAxisRaw ("Horizontal")));
 		float vertical = (float) (Input.GetAxisRaw ("Vertical"));
 
-		print (jumpFrame);
 		rope.update ();
+		//print (rope.printString);
 
 		if (jumping) {
 			if (jumpFrame == jumpFrames) {
@@ -50,12 +52,14 @@ public class Player : MovingObject {
 			}
 		}
 
-		if (Input.GetKey (KeyCode.Space)) {
+		if (Input.GetKeyDown (KeyCode.Space)) {
 			jumpFrame = 0;
+			animator.SetTrigger ("bend");
 		} 
 
 		if (Input.GetKeyUp (KeyCode.Space)) {
 			jumping = true;
+			animator.SetTrigger ("unbend");
 		}
 
 		if (rope.progress == 5 && jumpFrame != 0 && (horizontal != 0 || vertical !=0)) {
@@ -67,8 +71,10 @@ public class Player : MovingObject {
 				horizontal = dist * jumpPercent;
 				vertical = dist * jumpPercent;
 			} else {
-				horizontal = horizontal * jumpPercent * maxMove;
-				vertical = vertical * jumpPercent * maxMove;
+				if (horizontal > 0)
+					horizontal = horizontal * jumpPercent * maxMove + minMove;
+				if (vertical > 0)
+					vertical = vertical * jumpPercent * maxMove + minMove;
 			}
 
 			jumping = false;
@@ -84,14 +90,14 @@ public class Player : MovingObject {
 	protected override void OnCantMove<T> (T component) {
 //		Wall hitWall = component as Wall;
 //  		hitWall.DamageWall (wallDamage);
-		animator.SetTrigger ("playerChop");
+		animator.SetTrigger ("playerHit");
 	}
 
 	private void Restart() {
 		Application.LoadLevel (Application.loadedLevel);
 	}
 
-	public void HitStun () {
+	public void HitStun (int damage) {
 		animator.SetTrigger ("playerHit");
 	}
 

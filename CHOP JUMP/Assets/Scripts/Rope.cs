@@ -9,12 +9,17 @@ public class Rope {
 	public int framesElapsed;
 	private int lagFrames;
 
-	public Rope() {
+	public string printString;
+
+	Animator animator;
+
+	public Rope(Animator a) {
 		swinging = false;
 		attacking = false;
 		progress = 0;
 		framesElapsed = 0;
 		lagFrames = 15;
+		animator = a;
 	}
 
 	public void reset() {
@@ -24,16 +29,32 @@ public class Rope {
 		attacking = false;
 	}
 
+	public string getSwingTriggerString (int n) {
+		if (n == 1) {
+			return "swing1";
+		} else if (n == 2) {
+			return "swing2";
+		} else if (n == 3) {
+			return "swing3";
+		} else if (n == 4) {
+			return "swing4";
+		} else {
+			return "";
+		}
+	}
+
 	void updateOnInput(int currentStage) {
 		if (progress == currentStage && framesElapsed < lagFrames) {
 			progress += 1;
 			framesElapsed = 0;
+			animator.SetTrigger (getSwingTriggerString(progress));
 		} else {
 			this.reset ();
 		}
 	}
 
 	public void update() {
+		printString = "";
 
 		framesElapsed += 1;
 		if (framesElapsed > lagFrames) {
@@ -44,6 +65,7 @@ public class Rope {
 			if (progress == 0) {
 				swinging = true;
 				progress += 1;
+				animator.SetTrigger (getSwingTriggerString (progress));
 			} else {
 				this.reset ();
 			}
